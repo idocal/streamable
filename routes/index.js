@@ -1,5 +1,5 @@
+import stream from './stream';
 import express from 'express';
-import mongoose from 'mongoose';
 
 const router = express.Router();
 
@@ -8,14 +8,7 @@ router.get('/', (req, res) => {
     res.render('index');
 });
 
-/* Stream object URL */
-router.post('/stream', (req, res) => {
-    let address = req.body.address;
-    let port = req.body.port;
-    let username = req.body.username;
-    let password = req.body.password;
-
-
-});
+/* Mount stream route at /stream */
+router.use('/stream', stream);
 
 export default router;
