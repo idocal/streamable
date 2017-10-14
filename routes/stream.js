@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import Promise from 'bluebird';
+import User from '../db';
 
 const router = express.Router();
 
@@ -17,6 +18,8 @@ router.post('/', (req, res) => {
     let database = 'streamableDb';
     let uri = 'mongodb://' + username + ':' + password + '@' + address + ':' + port + '/' + database;
 
+    console.log(uri);
+
     // Connect to mongoDB
     let promise = mongoose.connect(uri, {
         useMongoClient: true,
@@ -24,20 +27,15 @@ router.post('/', (req, res) => {
     });
 
     promise.then( (db, err) => {
-        // Users collection querying
-        let schema = new mongoose.Schema({
-            id: Number,
-            first_name: String,
-            last_name: String,
-            email: String,
-            gender: String,
-            ip_address: String
-        });
 
-        let User = mongoose.model('User', schema);
+        // This is where the magic happens!
+        // Cursor is a Streamable object,
+        // We are iterating the cursor and returning the query
+        const cursor = User.find().limit(5).cursor();
 
-        User.findOne({first_name : 'Henri'}, (err, user) => {
-            console.dir(user);
+        cursor.on('data', doc => {
+            console.log(doc);
+            res.end();
         });
 
     });
