@@ -14,9 +14,11 @@ $("document").ready(() => {
             password: password
         };
 
+        $('.input').hide();
+        $('#loader').show();
 
         let xhr = $.post("/stream", inputJSON, () => {
-           alert('SUCCESS!');
+            $('.loader-msg').text('Finished!');
         });
     });
 

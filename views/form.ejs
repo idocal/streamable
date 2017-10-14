@@ -1,10 +1,14 @@
 <div class="login-block">
     <h1>Database Connect</h1>
-    <input type="text" value="localhost" placeholder="Database Host" id="address" class="host" />
-    <input type="text" value="27017" placeholder="Port" id="port" class="host" />
-    <input type="text" value="" placeholder="Username" id="username" />
-    <input type="password" value="" placeholder="Password" id="password" />
-    <button id="submit">Submit</button>
+    <input type="text" value="localhost" placeholder="Database Host" id="address" class="host input" />
+    <input type="text" value="27017" placeholder="Port" id="port" class="host input" />
+    <input type="text" value="" placeholder="Username" id="username" class="input" />
+    <input type="password" value="" placeholder="Password" id="password" class="input" />
+    <div id="loader">
+        <% include loader %>
+        <p class="loader-msg text-center">Loading stream to console...</p>
+    </div>
+    <button id="submit" class="input">Submit</button>
 </div>
 
 <!-- Static JS to deliver the input to Streamable object-->
