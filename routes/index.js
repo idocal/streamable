@@ -5,22 +5,17 @@ const router = express.Router();
 
 /* GET index page. */
 router.get('/', (req, res) => {
-    // res.json({
-    //     title: 'Express'
-    // });
     res.render('index');
 });
 
 /* Stream object URL */
-router.get('/stream', (req, res) => {
-    res.json({
-        table: 'table1',
-        data: {
-            key: 'val',
-            keyIndex: 2,
-            prop: 'Hello'
-        }
-    });
+router.post('/stream', (req, res) => {
+    let address = req.body.address;
+    let port = req.body.port;
+    let username = req.body.username;
+    let password = req.body.password;
+
+
 });
 
 export default router;
