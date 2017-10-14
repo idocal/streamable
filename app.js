@@ -5,15 +5,12 @@ import express from 'express';
 import lessMiddleware from 'less-middleware';
 import logger from 'morgan';
 import path from 'path';
-// import favicon from 'serve-favicon';
 
 import index from './routes/index';
 
 const app = express();
 const debug = Debug('streamable:app');
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -23,6 +20,8 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
 
 app.use('/', index);
 
@@ -43,10 +42,6 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.json(err);
 });
-
-app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'ejs');
-console.log('did that');
 
 // Handle uncaughtException
 process.on('uncaughtException', (err) => {
