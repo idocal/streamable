@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import Promise from 'bluebird';
-import User from '../db';
+import tables from '../db';
 
 const router = express.Router();
 
@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
          Cursor is a Streamable object,
          We are iterating the cursor and returning the query
          */
-        const cursor = User.find().cursor();
+        const cursor = tables.Restaurant.find({}).cursor();
 
         // Data is streaming
         cursor.on('data', doc => {
