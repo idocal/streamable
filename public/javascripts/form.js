@@ -19,6 +19,8 @@ $("document").ready(() => {
 
         let xhr = $.post("/stream", inputJSON, () => {
             $('.loader-msg').text('Finished!');
+            $('.DNA_cont').hide();
+            $('#successAnimation').show();
         });
     });
 
