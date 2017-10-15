@@ -18,6 +18,7 @@ The database **streamableDb** contains 3 collections:
 Corresponding Schemas appear in `db.js`
 
 The pre-made database is located in the `backup/` folder.
+
 Please use the following command to restore the database:
 
 ```
@@ -36,4 +37,5 @@ After filling the credentials and picking the desired tables, the readable strea
 
 ### Credits
 [Loader graphics](https://dribbble.com/shots/3156979-Double-Helix-Loader-pure-scss) by Drew Endly
+
 [Login form](https://dribbble.com/shots/1986741-Login-form-HTML-freebie) by Erikas Mališauskas
