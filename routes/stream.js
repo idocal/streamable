@@ -16,9 +16,9 @@ router.post('/', (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
     let database = 'streamableDb';
+    let inputTables = req.body['tables[]'];
+    console.log(inputTables);
     let uri = 'mongodb://' + username + ':' + password + '@' + address + ':' + port + '/' + database;
-
-    console.log(uri);
 
     // Connect to mongoDB
     let promise = mongoose.connect(uri, {
@@ -33,20 +33,53 @@ router.post('/', (req, res) => {
          Cursor is a Streamable object,
          We are iterating the cursor and returning the query
          */
-        const cursor = tables.Restaurant.find({}).cursor();
 
-        // Data is streaming
-        cursor.on('data', doc => {
-            console.log(doc);
-        });
+        let finishedTables = 0;
+        let numTables = (typeof(inputTables) == "string" ? 1 : inputTables.length);
 
-        // Data stopped streaming
-        cursor.on('end' ,() => {
+        if (numTables > 1) {
+            inputTables.forEach((table, index) => { // For each table selected in UI
+                let cursor = tables[table].find({}).cursor();
+                cursor.on('data', doc => {
+                    console.log('\n\nSTREAMING NOW:\n');
+                    console.log(doc); // The streamed output to console
+                    console.log('\n-----------\n\n');
+                });
+
+                cursor.on('end', () => {
+                    finishedTables ++;
+                    if (finishedTables == inputTables.length) {
+                        db.close();
+                        setTimeout(() => {
+                            res.send('OK!');
+                        }, 1000); // Delay for UI loading purposes
+                    }
+                });
+
+
+            });
+        }
+
+        else if (numTables == 1) {
+            let cursor = tables[inputTables].find({}).cursor();
+            cursor.on('data', doc => {
+                console.log('\n\nSTREAMING NOW:\n');
+                console.log(doc); // The streamed output to console
+                console.log('\n-----------\n\n');
+            });
+
+            cursor.on('end', () => {
+                db.close();
+                setTimeout(() => {
+                    res.send('OK!');
+                }, 1000); // Delay for UI loading purposes
+            });
+        }
+
+        else {
             db.close();
-            setTimeout(() => {
-                res.send('OK!');
-            }, 1000);
-        });
+            res.send('OK!');
+        }
 
     });
 
