@@ -10,8 +10,6 @@ mongoose.Promise = Promise;
 /* Stream object URI */
 router.post('/', (req, res) => {
 
-    // res.writeHead(200, {'Content-Type': 'applicatoin/json'});
-    //
     // Produce mongoDB URI from request
     let address = req.body.address;
     let port = req.body.port;
@@ -35,7 +33,7 @@ router.post('/', (req, res) => {
          Cursor is a Streamable object,
          We are iterating the cursor and returning the query
          */
-        const cursor = User.find().limit(5).cursor();
+        const cursor = User.find().cursor();
 
         // Data is streaming
         cursor.on('data', doc => {
@@ -47,7 +45,7 @@ router.post('/', (req, res) => {
             db.close();
             setTimeout(() => {
                 res.send('OK!');
-            }, 2000);
+            }, 1000);
         });
 
     });
