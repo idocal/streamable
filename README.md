@@ -15,6 +15,7 @@ The database **streamableDb** contains 3 collections:
 * Users
 * Cars
 * Restaurants
+
 Corresponding Schemas appear in `db.js`
 
 The pre-made database is located in the `backup/` folder.
